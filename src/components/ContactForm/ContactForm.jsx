@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { nanoid } from 'nanoid';
 import css from './ContactForm.module.css';
 import PropTypes from 'prop-types';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 export class ContactForm extends Component {
   static propTypes = {
@@ -48,9 +49,12 @@ export class ContactForm extends Component {
       contact => contact.name.toLowerCase() === name.toLowerCase()
     );
     if (existingContact) {
-      alert(`${name} is already in contacts!`);
-      return;
-    }
+       Notify.failure(`${name} is already in your contacts!`, { position: 'center-top' });  
+        return;
+      }
+       else {
+              Notify.success(`${name} is successfully added to your contacts!`, { position: 'center-top' });
+        }
 
     // Add Contact
     addContact({
@@ -98,7 +102,7 @@ export class ContactForm extends Component {
             onChange={this.handleNumberChange}
           />
         </label>
-        <button className={css.formButton} type="submit">
+        <button className={css.btnSubmit} type="submit">
           Add Contact
         </button>
       </form>
